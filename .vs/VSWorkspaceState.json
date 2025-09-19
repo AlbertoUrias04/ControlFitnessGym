@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Api",
+    "\\Api\\bin",
+    "\\Api\\Controllers",
+    "\\Api\\Entidades",
+    "\\Api\\Properties",
+    "\\Api\\Servicios",
+    "\\src",
+    "\\src\\Components",
+    "\\src\\Components\\Login"
+  ],
+  "SelectedNode": "\\src\\Components\\Login\\Login.js",
+  "PreviewInSolutionExplorer": false
+}

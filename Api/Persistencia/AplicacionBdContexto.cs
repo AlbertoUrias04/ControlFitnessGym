@@ -1,0 +1,116 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Data;
+using System.Reflection;
+using Api.Comun.Interfaces;
+using Api.Entidades;
+using Api.Persistencia.Configuraciones;
+
+namespace Api.Persistencia;
+
+public class AplicacionBdContexto : DbContext, IAplicacionBdContexto
+{
+    private IDbContextTransaction? _actualTransaccion = null;
+    public AplicacionBdContexto(DbContextOptions opciones) : base(opciones)
+    {
+    }
+    public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<SesionUsuario> SesionesUsuario { get; set; }
+    public DbSet<Sucursal> Sucursales { get; set; }
+    public DbSet<Proveedor> Proveedores { get; set; }
+    public DbSet<Producto> Productos { get; set; }
+    public DbSet<Venta> Ventas { get; set; }
+    public DbSet<Cancelacion> Cancelaciones { get; set; }
+    public DbSet<Reembolso> Reembolsos { get; set; }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancelacionToken = default)
+    {
+        foreach (var entrada in ChangeTracker.Entries<ISlug>())
+        {
+            if (entrada.State == EntityState.Added || entrada.State == EntityState.Modified)
+            {
+                var entidad = entrada.Entity;
+                if (string.IsNullOrWhiteSpace(entidad.Slug))
+                {
+                    entidad.Slug = entidad.ObtenerDescripcionParaSlug().ToLower().Replace(" ", "-");
+                }
+            }
+        }
+
+        var resultado = await base.SaveChangesAsync(cancelacionToken);
+        return resultado;
+    }
+
+    public async Task EmpezarTransaccionAsync()
+    {
+        if (_actualTransaccion != null)
+        {
+            return;
+        }
+
+        _actualTransaccion = await base.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted)
+            .ConfigureAwait(false);
+    }
+
+    public async Task MandarTransaccionAsync()
+    {
+        try
+        {
+            await SaveChangesAsync().ConfigureAwait(false);
+
+            _actualTransaccion?.Commit();
+        }
+        catch
+        {
+            CancelarTransaccion();
+            throw;
+        }
+        finally
+        {
+            if (_actualTransaccion != null)
+            {
+                _actualTransaccion.Dispose();
+                _actualTransaccion = null;
+            }
+        }
+    }
+
+    public void CancelarTransaccion()
+    {
+        try
+        {
+            _actualTransaccion?.Rollback();
+        }
+        finally
+        {
+            if (_actualTransaccion != null)
+            {
+                _actualTransaccion.Dispose();
+                _actualTransaccion = null;
+            }
+        }
+    }
+
+    public async Task<int> ExecutarSqlComandoAsync(string comandoSql, CancellationToken cancelacionToken)
+    {
+        return await base.Database.ExecuteSqlRawAsync(comandoSql, cancelacionToken);
+    }
+
+    public async Task<int> ExecutarSqlComandoAsync(string comandoSql, IEnumerable<object> parametros, CancellationToken cancelacionToken)
+    {
+        return await base.Database.ExecuteSqlRawAsync(comandoSql, parametros, cancelacionToken);
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        modelBuilder.ApplyConfiguration(new SucursalConfiguracion());
+        modelBuilder.ApplyConfiguration(new ProveedorConfiguracion());
+        modelBuilder.ApplyConfiguration(new ProductoConfiguracion());
+        modelBuilder.ApplyConfiguration(new VentaConfiguracion());
+        modelBuilder.ApplyConfiguration(new CancelacionConfiguracion());
+        modelBuilder.ApplyConfiguration(new ReembolsoConfiguracion());
+
+        base.OnModelCreating(modelBuilder);
+    }
+}

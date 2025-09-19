@@ -1,0 +1,17 @@
+proovedor (nombre, direccion, telefono) / *Alberto
+productos (id, nombre, descripcion, precio, imagen) / *Emmanuel
+usuarios (nombre, correo, contraseña, telefono, rol, categoria) / ✓
+ventas (id, cantidad, total) *Angel
+cancelacion (idUsuario, producto)
+reembolso (idUsuario, producto, cantidad, total)
+sucursales (direccion, nombre) / *Jesus
+
+/ -> chilas
+
+1. base de datos ✓✓
+2. modelar la bd en entidades en la api
+3. en la carpeta entidades meter las tablas (Cada arch es una)
+4. agregar las configs en persistencia (llaves foraneas, indices)
+5. agregar contexto e interaz de contexto
+6. hacer las acciones (un controlador)
+7. pasar al frontend (Sidebar, navbar)
