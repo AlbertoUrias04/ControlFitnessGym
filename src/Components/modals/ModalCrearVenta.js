@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller } from "react-hook-form";
 import * as yup from "yup";
-import api from "../services/api";
+import api from "../../services/api";
 import "./ModalCrearVenta.js";
 
 
@@ -16,13 +16,13 @@ const esquema = yup.object().shape({
     nombreSucursal: yup.string().required("Seleccione una sucursal"),
     cantidad: yup
         .number()
-        .typeError("Debe ser un número")
+        .typeError("Debe ser un nï¿½mero")
         .integer("Debe ser entero")
         .min(1, "Debe ser mayor a 0")
         .required("Cantidad obligatoria"),
     usuarioId: yup
         .number()
-        .typeError("Debe ser un número")
+        .typeError("Debe ser un nï¿½mero")
         .required("Usuario requerido")
 });
 
@@ -114,7 +114,7 @@ export default function ModalCrearVenta({ abierto, onClose, onGuardado }) {
                         type="number"
                         {...register("cantidad", { required: true, min: 1 })}
                         error={!!errors.cantidad}
-                        helperText={errors.cantidad ? "Ingrese una cantidad válida" : ""}
+                        helperText={errors.cantidad ? "Ingrese una cantidad vï¿½lida" : ""}
                         margin="normal"
                     />
                 </DialogContent>

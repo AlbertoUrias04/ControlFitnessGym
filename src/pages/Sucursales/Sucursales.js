@@ -4,59 +4,58 @@ import {
     Chip, TextField, Pagination
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import api from "../services/api";
-import ModalCrearProveedor from "../Components/ModalCrearProveedor";
-import ModalEditarProveedor from "../Components/ModalEditarProveedor";
-import './Proveedores.css';
+import api from "../../services/api";
+import ModalCrearSucursal from "../../Components/modals/ModalCrearSucursal"
+import ModalEditarSucursal from "../../Components/modals/ModalEditarSucursal"
+import './Sucursales.css';
 
-export default function Proveedores() {
-    const [proveedores, setProveedores] = useState([]);
+export default function Sucursales() {
+    const [sucursales, setSucursales] = useState([]);
     const [filtro, setFiltro] = useState("");
     const [pagina, setPagina] = useState(1);
-    const [filtrados, setFiltrados] = useState([]);
+    const [filtradas, setFiltradas] = useState([]);
     const [modalCrearAbierto, setModalCrearAbierto] = useState(false);
     const [modalEditarAbierto, setModalEditarAbierto] = useState(false);
-    const [proveedorEditar, setProveedorEditar] = useState(null);
+    const [sucursalEditar, setSucursalEditar] = useState(null);
 
     const itemsPorPagina = 5;
 
-    const cargarProveedores = () => {
-        api.get("/proveedores?habilitado=true").then((res) => {
-            setProveedores(res.data);
+    const cargarSucursales = () => {
+        api.get("/sucursales?habilitado=true").then((res) => {
+            setSucursales(res.data);
         });
     };
 
     useEffect(() => {
-        cargarProveedores();
+        cargarSucursales();
     }, []);
 
     useEffect(() => {
-        const datos = proveedores.filter((p) =>
-            p.nombre.toLowerCase().includes(filtro.toLowerCase())
+        const datos = sucursales.filter((s) =>
+            s.nombre.toLowerCase().includes(filtro.toLowerCase())
         );
-        setFiltrados(datos);
+        setFiltradas(datos);
         setPagina(1);
-    }, [filtro, proveedores]);
+    }, [filtro, sucursales]);
 
-    const abrirEditar = (p) => {
-        setProveedorEditar(p);
+    const abrirEditar = (sucursal) => {
+        setSucursalEditar(sucursal);
         setModalEditarAbierto(true);
     };
 
-    const eliminarProveedor = async (slug) => {
-        const confirmar = window.confirm("�Deshabilitar este proveedor?");
-        if (!confirmar) return;
-
+    const eliminarSucursal = async (slug) => {
+        const confirmacion = window.confirm("�Deshabilitar esta sucursal?");
+        if (!confirmacion) return;
         try {
-            await api.patch(`/proveedores/${slug}`, { habilitado: false });
-            cargarProveedores();
+            await api.patch(`/sucursales/${slug}`, { habilitado: false });
+            cargarSucursales();
         } catch (err) {
-            alert("Error al deshabilitar proveedor");
+            alert("Error al deshabilitar");
             console.error(err);
         }
     };
 
-    const proveedoresPaginados = filtrados.slice(
+    const sucursalesPaginadas = filtradas.slice(
         (pagina - 1) * itemsPorPagina,
         pagina * itemsPorPagina
     );
@@ -64,16 +63,15 @@ export default function Proveedores() {
     return (
         <div className="page-container">
             <div className="header">
-                <h1>Proveedores</h1>
+                <h1>Sucursales</h1>
                 <Button variant="contained" onClick={() => setModalCrearAbierto(true)}>
-                    Nuevo
+                    Nueva
                 </Button>
             </div>
 
             <div className="search-bar">
                 <TextField
-                    label="Buscar por nombre, contacto o telefono"
-                    variant="outlined"
+                    label="Buscar por nombre"
                     fullWidth
                     value={filtro}
                     onChange={(e) => setFiltro(e.target.value)}
@@ -85,35 +83,33 @@ export default function Proveedores() {
                     <TableHead>
                         <TableRow className="table-header">
                             <TableCell className="actions-cell"><b>Nombre</b></TableCell>
-                            <TableCell className="actions-cell"><b>Telefono</b></TableCell>
-                            <TableCell className="actions-cell"><b>Email</b></TableCell>
+                            <TableCell className="actions-cell"><b>Direccion</b></TableCell>
                             <TableCell className="actions-cell"><b>Estado</b></TableCell>
                             <TableCell align="center" className="actions-cell"><b>Acciones</b></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {proveedoresPaginados.map((p) => (
-                            <TableRow key={p.slug}>
-                                <TableCell>{p.nombre}</TableCell>
-                                <TableCell>{p.telefono}</TableCell>
-                                <TableCell>{p.email}</TableCell>
+                        {sucursalesPaginadas.map((s) => (
+                            <TableRow key={s.slug}>
+                                <TableCell>{s.nombre}</TableCell>
+                                <TableCell>{s.direccion}</TableCell>
                                 <TableCell>
-                                    <Chip label={p.habilitado ? "Habilitado" : "Deshabilitado"}
-                                        color={p.habilitado ? "success" : "default"} />
+                                    <Chip label={s.habilitado ? "Habilitada" : "Deshabilitada"}
+                                        color={s.habilitado ? "success" : "default"} />
                                 </TableCell>
-                                <TableCell align="center" className="actions-cell">
-                                    <Button size="small" variant="contained" onClick={() => abrirEditar(p)}>
+                                <TableCell align="center">
+                                    <Button size="small" variant="contained" onClick={() => abrirEditar(s)}>
                                         Editar
                                     </Button>
-                                    <Button size="small" color="error" variant="outlined" onClick={() => eliminarProveedor(p.slug)}>
+                                    <Button size="small" color="error" variant="outlined" onClick={() => eliminarSucursal(s.slug)}>
                                         Eliminar
                                     </Button>
                                 </TableCell>
                             </TableRow>
                         ))}
-                        {proveedoresPaginados.length === 0 && (
+                        {sucursalesPaginadas.length === 0 && (
                             <TableRow>
-                                <TableCell colSpan={5} align="center">No hay proveedores.</TableCell>
+                                <TableCell colSpan={4} align="center">No hay sucursales.</TableCell>
                             </TableRow>
                         )}
                     </TableBody>
@@ -122,23 +118,23 @@ export default function Proveedores() {
 
             <div className="pagination-container">
                 <Pagination
-                    count={Math.ceil(filtrados.length / itemsPorPagina)}
+                    count={Math.ceil(filtradas.length / itemsPorPagina)}
                     page={pagina}
                     onChange={(e, v) => setPagina(v)}
                 />
             </div>
 
-            <ModalCrearProveedor
+            <ModalCrearSucursal
                 abierto={modalCrearAbierto}
                 onClose={() => setModalCrearAbierto(false)}
-                onGuardado={cargarProveedores}
+                onGuardado={cargarSucursales}
             />
 
-            <ModalEditarProveedor
+            <ModalEditarSucursal
                 abierto={modalEditarAbierto}
                 onClose={() => setModalEditarAbierto(false)}
-                proveedor={proveedorEditar}
-                onActualizado={cargarProveedores}
+                sucursal={sucursalEditar}
+                onActualizado={cargarSucursales}
             />
         </div>
     );

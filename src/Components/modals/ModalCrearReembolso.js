@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller } from "react-hook-form";
 import * as yup from "yup";
-import api from "../services/api";
+import api from "../../services/api";
 import "./ModalCrearReembolso.js";
 
 const esquema = yup.object().shape({
@@ -15,13 +15,13 @@ const esquema = yup.object().shape({
     nombreSucursal: yup.string().required("Seleccione una sucursal"),
     monto: yup
         .number()
-        .typeError("Debe ser un número")
+        .typeError("Debe ser un nï¿½mero")
         .integer("Debe ser entero")
         .min(1, "Debe ser mayor a 0")
         .required("Cantidad obligatoria"),
     usuarioId: yup
         .number()
-        .typeError("Debe ser un número")
+        .typeError("Debe ser un nï¿½mero")
         .required("Usuario requerido")
 });
 
@@ -106,7 +106,7 @@ export default function ModalCrearReembolso({ abierto, onClose, onGuardado }) {
                         type="number"
                         {...register("monto", { required: true, min: 0.01 })}
                         error={!!errors.monto}
-                        helperText={errors.monto ? "Ingrese un monto válido" : ""}
+                        helperText={errors.monto ? "Ingrese un monto vï¿½lido" : ""}
                         margin="normal"
                     />
                 </DialogContent>

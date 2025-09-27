@@ -11,7 +11,7 @@ import {
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import api from "../services/api";
+import api from "../../services/api";
 import "./ModalCrearUsuario.js";
 
 const esquema = yup.object().shape({
@@ -19,7 +19,7 @@ const esquema = yup.object().shape({
     apellidoPaterno: yup.string().required("El apellido paterno es obligatorio"),
     apellidoMaterno: yup.string().required("El apellido materno es obligatorio"),
     nombreUsuario: yup.string().required("El usuario es obligatorio"),
-    password: yup.string().required("La contraseña es obligatoria"),
+    password: yup.string().required("La contraseï¿½a es obligatoria"),
 });
 
 export default function ModalCrearUsuario({ abierto, onClose, onGuardado }) {

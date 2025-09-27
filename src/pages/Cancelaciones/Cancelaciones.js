@@ -4,38 +4,38 @@ import {
     TextField, Pagination
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import api from "../services/api";
-import ModalCrearReembolso from "../Components/ModalCrearReembolso";
-import "./Reembolsos.css";
+import api from "../../services/api";
+import ModalCancelarVenta from "../../Components/modals/ModalCancelarVenta";
+import "./Cancelaciones.css";
 
-export default function Reembolsos() {
-    const [reembolsos, setReembolsos] = useState([]);
+export default function Cancelaciones() {
+    const [cancelaciones, setCancelaciones] = useState([]);
     const [filtro, setFiltro] = useState("");
     const [pagina, setPagina] = useState(1);
-    const [filtrados, setFiltrados] = useState([]);
+    const [filtradas, setFiltradas] = useState([]);
     const [modalAbierto, setModalAbierto] = useState(false);
 
     const itemsPorPagina = 5;
 
-    const cargarReembolsos = () => {
-        api.get("/reembolsos").then((res) => {
-            setReembolsos(res.data);
+    const cargarCancelaciones = () => {
+        api.get("/cancelaciones").then((res) => {
+            setCancelaciones(res.data);
         });
     };
 
     useEffect(() => {
-        cargarReembolsos();
+        cargarCancelaciones();
     }, []);
 
     useEffect(() => {
-        const datos = reembolsos.filter((r) =>
-            (r.nombreSucursal + r.monto).toLowerCase().includes(filtro.toLowerCase())
+        const datos = cancelaciones.filter((c) =>
+            (c.motivo + " " + c.ventaId).toLowerCase().includes(filtro.toLowerCase())
         );
-        setFiltrados(datos);
+        setFiltradas(datos);
         setPagina(1);
-    }, [filtro, reembolsos]);
+    }, [filtro, cancelaciones]);
 
-    const reembolsosPaginados = filtrados.slice(
+    const cancelacionesPaginadas = filtradas.slice(
         (pagina - 1) * itemsPorPagina,
         pagina * itemsPorPagina
     );
@@ -43,15 +43,15 @@ export default function Reembolsos() {
     return (
         <div className="page-container">
             <div className="header">
-                <h1>Reembolsos</h1>
+                <h1>Cancelaciones</h1>
                 <Button variant="contained" onClick={() => setModalAbierto(true)}>
-                    Nuevo reembolso
+                    Cancelar venta
                 </Button>
             </div>
 
             <div className="search-bar">
                 <TextField
-                    label="Buscar por cliente, usuario o motivo"
+                    label="Buscar por usuario, motivo o orden"
                     variant="outlined"
                     fullWidth
                     value={filtro}
@@ -63,26 +63,22 @@ export default function Reembolsos() {
                 <Table>
                     <TableHead>
                         <TableRow className="table-header">
-                            <TableCell className="actions-cell"><b>IDUsuario</b></TableCell>
-                            <TableCell className="actions-cell"><b>Sucursal</b></TableCell>
-                            <TableCell className="actions-cell"><b>IDProducto</b></TableCell>
-                            <TableCell className="actions-cell"><b>Monto</b></TableCell>
+                            <TableCell className="actions-cell"><b>ID Venta</b></TableCell>
+                            <TableCell className="actions-cell"><b>Motivo</b></TableCell>
                             <TableCell className="actions-cell"><b>Fecha</b></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {reembolsosPaginados.map((r) => (
-                            <TableRow key={r.id}>
-                                <TableCell>{r.usuarioId}</TableCell>
-                                <TableCell>{r.nombreSucursal}</TableCell>
-                                <TableCell>{r.productoId}</TableCell>
-                                <TableCell>${r.monto.toFixed(2)}</TableCell>
-                                <TableCell>{new Date(r.fecha).toLocaleString()}</TableCell>
+                        {cancelacionesPaginadas.map((c) => (
+                            <TableRow key={c.id}>
+                                <TableCell>{c.ventaId}</TableCell>
+                                <TableCell>{c.motivo}</TableCell>
+                                <TableCell>{new Date(c.fecha).toLocaleString()}</TableCell>
                             </TableRow>
                         ))}
-                        {reembolsosPaginados.length === 0 && (
+                        {cancelacionesPaginadas.length === 0 && (
                             <TableRow>
-                                <TableCell colSpan={3} align="center">No hay reembolsos.</TableCell>
+                                <TableCell colSpan={3} align="center">No hay cancelaciones.</TableCell>
                             </TableRow>
                         )}
                     </TableBody>
@@ -91,16 +87,16 @@ export default function Reembolsos() {
 
             <div className="pagination-container">
                 <Pagination
-                    count={Math.ceil(filtrados.length / itemsPorPagina)}
+                    count={Math.ceil(filtradas.length / itemsPorPagina)}
                     page={pagina}
                     onChange={(e, v) => setPagina(v)}
                 />
             </div>
 
-            <ModalCrearReembolso
+            <ModalCancelarVenta
                 abierto={modalAbierto}
                 onClose={() => setModalAbierto(false)}
-                onGuardado={cargarReembolsos}
+                onGuardado={cargarCancelaciones}
             />
         </div>
     );

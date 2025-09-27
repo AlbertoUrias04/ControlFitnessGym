@@ -4,9 +4,9 @@ import {
     Chip, TextField, Pagination
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import api from "../services/api";
-import ModalCrearProducto from "../Components/ModalCrearProducto";
-import ModalEditarProducto from "../Components/ModalEditarProducto";
+import api from "../../services/api";
+import ModalCrearProducto from "../../Components/modals/ModalCrearProducto"
+import ModalEditarProducto from "../../Components/modals/ModalEditarProducto"
 import './Productos.css';
 
 export default function Productos() {

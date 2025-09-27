@@ -4,8 +4,8 @@ import {
     TextField, Pagination
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import api from "../services/api";
-import ModalCrearVenta from "../Components/ModalCrearVenta";
+import api from "../../services/api";
+import ModalCrearVenta from "../../Components/modals/ModalCrearVenta"
 import "./Ventas.css";
 
 export default function Ventas() {

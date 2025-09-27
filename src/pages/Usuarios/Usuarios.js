@@ -12,9 +12,9 @@ import {
     Pagination,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import api from "../services/api";
-import ModalCrearUsuario from "../Components/ModalCrearUsuario";
-import ModalEditarUsuario from "../Components/ModalEditarUsuario";
+import api from "../../services/api";
+import ModalCrearUsuario from "../../Components/modals/ModalCrearUsuario"
+import ModalEditarUsuario from "../../Components/modals/ModalEditarUsuario"
 import './Usuarios.css';
 
 export default function Usuarios() {

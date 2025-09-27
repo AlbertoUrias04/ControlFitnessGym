@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dell Latitude\\Desktop\\proyecto-prog-web\\proyecto\\Api\\Api.csproj": {}
+    "C:\\Users\\Hector\\Documents\\GitHub\\ControlFitnessGym\\Api\\Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dell Latitude\\Desktop\\proyecto-prog-web\\proyecto\\Api\\Api.csproj": {
+    "C:\\Users\\Hector\\Documents\\GitHub\\ControlFitnessGym\\Api\\Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dell Latitude\\Desktop\\proyecto-prog-web\\proyecto\\Api\\Api.csproj",
+        "projectUniqueName": "C:\\Users\\Hector\\Documents\\GitHub\\ControlFitnessGym\\Api\\Api.csproj",
         "projectName": "Api",
-        "projectPath": "C:\\Users\\Dell Latitude\\Desktop\\proyecto-prog-web\\proyecto\\Api\\Api.csproj",
-        "packagesPath": "C:\\Users\\Dell Latitude\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dell Latitude\\Desktop\\proyecto-prog-web\\proyecto\\Api\\obj\\",
+        "projectPath": "C:\\Users\\Hector\\Documents\\GitHub\\ControlFitnessGym\\Api\\Api.csproj",
+        "packagesPath": "C:\\Users\\Hector\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hector\\Documents\\GitHub\\ControlFitnessGym\\Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Dell Latitude\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hector\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -44,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net7.0": {
@@ -59,6 +59,10 @@
               "version": "[7.0.15, )"
             },
             "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.15, )"
+            },
+            "Microsoft.EntityFrameworkCore.Analyzers": {
               "target": "Package",
               "version": "[7.0.15, )"
             },
@@ -94,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

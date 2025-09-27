@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../services/api.js"; // tu instancia axios configurada
+import api from "../../services/api";
 import './Login.css';
 
 const Login = () => {
@@ -35,7 +35,7 @@ const Login = () => {
 
             if (err.response) {
                 console.log("Respuesta del servidor:", err.response);
-                console.log("C�digo de estado:", err.response.status);
+                console.log("Código de estado:", err.response.status);
                 console.log("Datos del error:", err.response.data);
             }
 

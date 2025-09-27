@@ -4,7 +4,7 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import api from "../services/api";
+import api from "../../services/api";
 import "./ModalCancelarVenta.js";
 
 export default function ModalCancelarVenta({ abierto, onClose, onGuardado }) {
