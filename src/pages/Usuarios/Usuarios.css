@@ -1,5 +1,5 @@
 .page-container {
-    /* Quitar el margin-left aquí porque lo hacemos dinámico desde App.js */
+    /* Quitar el margin-left aquï¿½ porque lo hacemos dinï¿½mico desde App.js */
     padding: 0; /* El padding lo aplicamos en main */
     background: transparent;
     min-height: auto;
@@ -26,7 +26,7 @@
 
     .header h1 {
         font-size: 2rem;
-        color: #0057b8;
+        color: #d32f2f;
         font-weight: bold;
     }
 
@@ -35,7 +35,7 @@
 }
 
 .table-header th {
-    background-color: #0057b8;
+    background-color: #d32f2f;
     color: white;
     font-weight: bold;
     text-align: left;

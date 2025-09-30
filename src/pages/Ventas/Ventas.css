@@ -28,7 +28,7 @@
 }
 
 .table-header th {
-    background-color: #0057b8;
+    background-color: #d32f2f;
     color: white;
     font-weight: bold;
     text-align: left;
@@ -42,4 +42,10 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 1.5rem;
+}
+
+
+.botonVentas {
+    background-color: #d32f2f !important;
+    color: white !important;
 }

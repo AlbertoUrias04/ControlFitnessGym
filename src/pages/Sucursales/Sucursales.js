@@ -64,7 +64,7 @@ export default function Sucursales() {
         <div className="page-container">
             <div className="header">
                 <h1>Sucursales</h1>
-                <Button variant="contained" onClick={() => setModalCrearAbierto(true)}>
+                <Button className="botonVentas"  variant="contained" onClick={() => setModalCrearAbierto(true)}>
                     Nueva
                 </Button>
             </div>
@@ -98,7 +98,7 @@ export default function Sucursales() {
                                         color={s.habilitado ? "success" : "default"} />
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Button size="small" variant="contained" onClick={() => abrirEditar(s)}>
+                                    <Button className="botonVentas" size="small" variant="contained" onClick={() => abrirEditar(s)}>
                                         Editar
                                     </Button>
                                     <Button size="small" color="error" variant="outlined" onClick={() => eliminarSucursal(s.slug)}>

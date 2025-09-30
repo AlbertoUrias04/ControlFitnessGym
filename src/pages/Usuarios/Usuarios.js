@@ -79,7 +79,7 @@ export default function Usuarios() {
         <div className="page-container">
             <div className="header">
                 <h1>Usuarios</h1>
-                <Button variant="contained" color="primary" onClick={() => setModalAbierto(true)}>
+                <Button className="botonVentas"  variant="contained" color="primary" onClick={() => setModalAbierto(true)}>
                     Nuevo
                 </Button>
             </div>
@@ -122,6 +122,7 @@ export default function Usuarios() {
                                 </TableCell>
                                 <TableCell align="center" className="actions-cell">
                                     <Button
+                                        className="botonVentas"
                                         variant="contained"
                                         size="small"
                                         color="primary"

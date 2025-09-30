@@ -65,7 +65,7 @@ export default function Proveedores() {
         <div className="page-container">
             <div className="header">
                 <h1>Proveedores</h1>
-                <Button variant="contained" onClick={() => setModalCrearAbierto(true)}>
+                <Button className="botonVentas" variant="contained" onClick={() => setModalCrearAbierto(true)}>
                     Nuevo
                 </Button>
             </div>
@@ -102,7 +102,7 @@ export default function Proveedores() {
                                         color={p.habilitado ? "success" : "default"} />
                                 </TableCell>
                                 <TableCell align="center" className="actions-cell">
-                                    <Button size="small" variant="contained" onClick={() => abrirEditar(p)}>
+                                    <Button className="botonVentas"  size="small" variant="contained" onClick={() => abrirEditar(p)}>
                                         Editar
                                     </Button>
                                     <Button size="small" color="error" variant="outlined" onClick={() => eliminarProveedor(p.slug)}>

@@ -8,6 +8,8 @@ import api from "../../services/api";
 import ModalCrearVenta from "../../Components/modals/ModalCrearVenta"
 import "./Ventas.css";
 
+
+
 export default function Ventas() {
     const [ventas, setVentas] = useState([]);
     const [filtro, setFiltro] = useState("");
@@ -44,7 +46,7 @@ export default function Ventas() {
         <div className="page-container">
             <div className="header">
                 <h1>Ventas</h1>
-                <Button variant="contained" onClick={() => setModalAbierto(true)}>
+                <Button className="botonVentas" variant="contained" onClick={() => setModalAbierto(true)}>
                     Nueva venta
                 </Button>
             </div>

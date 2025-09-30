@@ -44,7 +44,7 @@ export default function Cancelaciones() {
         <div className="page-container">
             <div className="header">
                 <h1>Cancelaciones</h1>
-                <Button variant="contained" onClick={() => setModalAbierto(true)}>
+                <Button className="botonVentas"  variant="contained" onClick={() => setModalAbierto(true)}>
                     Cancelar venta
                 </Button>
             </div>

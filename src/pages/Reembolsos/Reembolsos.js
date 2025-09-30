@@ -44,7 +44,7 @@ export default function Reembolsos() {
         <div className="page-container">
             <div className="header">
                 <h1>Reembolsos</h1>
-                <Button variant="contained" onClick={() => setModalAbierto(true)}>
+                <Button className="botonVentas"  variant="contained" onClick={() => setModalAbierto(true)}>
                     Nuevo reembolso
                 </Button>
             </div>

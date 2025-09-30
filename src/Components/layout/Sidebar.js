@@ -9,7 +9,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
         >
             <div>
                 <div className="flex items-center justify-between mb-6">
-                    {isOpen && <h2 className="text-2xl font-bold text-red-600">Farmacia</h2>}
+                    {isOpen && <h2 className="text-2xl font-bold text-red-600">ControlFitness Gym</h2>}
                     <button onClick={toggleSidebar} className="text-red-600 hover:text-red-800 focus:outline-none">
                         <Menu className="w-6 h-6" />
                     </button>

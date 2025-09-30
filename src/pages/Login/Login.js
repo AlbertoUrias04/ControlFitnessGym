@@ -48,7 +48,7 @@ const Login = () => {
             <h2>Acceso para empleados</h2>
             <form className="login-form" onSubmit={handleSubmit}>
                 <div>
-                    <label>Id de Usuario:</label>
+                    <label>Nombre de Usuario:</label>
                     <input
                         type="text"
                         placeholder="Ingresa tu ID"

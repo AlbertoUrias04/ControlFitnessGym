@@ -64,7 +64,7 @@ export default function Productos() {
         <div className="page-container">
             <div className="header">
                 <h1>Productos</h1>
-                <Button variant="contained" onClick={() => setModalCrearAbierto(true)}>
+                <Button className="botonVentas" variant="contained" onClick={() => setModalCrearAbierto(true)}>
                     Nuevo
                 </Button>
             </div>
@@ -104,7 +104,7 @@ export default function Productos() {
                                     <Chip label={p.habilitado ? "Habilitado" : "Deshabilitado"} color={p.habilitado ? "success" : "default"} />
                                 </TableCell>
                                 <TableCell align="center" className="actions-cell">
-                                    <Button size="small" variant="contained" onClick={() => abrirEditar(p)}>
+                                    <Button className="botonVentas" size="small" variant="contained" onClick={() => abrirEditar(p)}>
                                         Editar
                                     </Button>
                                     <Button size="small" color="error" variant="outlined" onClick={() => eliminarProducto(p.slug)}>
