@@ -208,3 +208,22 @@
         max-width: 100%;
     }
 }
+
+
+/* Estilo para el contenedor principal que ocupa toda la pantalla */
+.login-wrapper {
+  height: 100vh;
+  width: 100vw;
+  
+  /* Centra el contenido (el formulario) vertical y horizontalmente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Aplica la imagen de fondo con una capa oscura encima para el efecto difuminado */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), var(--background-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
+import ronnieImage from '../../Components/img/ronnie.jpg'; 
 import './Login.css';
 
 const Login = () => {
+
     const [usuarioNombre, setUsuarioNombre] = useState("");
     const [contrasena, setContrasena] = useState("");
     const [error, setError] = useState(null);
@@ -12,57 +14,37 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         setLoading(true);
         setError(null);
-
         try {
             const data = {
                 UsuarioNombre: usuarioNombre,
                 Contrasena: contrasena,
                 MantenerSesion: true
             };
-
-            console.log("Datos enviados al login:", data);
             const res = await api.post("/login", data);
-
-            console.log("Respuesta completa:", res);
-            console.log("Headers:", res.headers);
-
             const token = res.headers.authorization || res.headers.Authorization;
-            console.log("Token recibido:", token);
-
             if (!token) {
-                alert("ERROR: No se recibió token del servidor");
                 throw new Error("Token no recibido");
             }
-
             localStorage.setItem("token", token);
-            const tokenGuardado = localStorage.getItem("token");
-
-            // NO navegar automáticamente - esperar que el usuario vea el mensaje
-            alert("✅ Login exitoso!\n\nToken guardado (primeros 50 chars):\n" + tokenGuardado.substring(0, 50) + "...\n\nLongitud: " + tokenGuardado.length + "\n\n¡Presiona OK para continuar!");
-
+            alert("✅ Login exitoso!");
             navigate("/usuarios");
         } catch (err) {
             console.error("Error al iniciar sesion:", err);
-
-            if (err.response) {
-                console.log("Respuesta del servidor:", err.response);
-                console.log("Código de estado:", err.response.status);
-                console.log("Datos del error:", err.response.data);
-            }
-
             setError("Usuario o contraseña incorrectos");
         } finally {
             setLoading(false);
         }
-
         return false;
     };
 
     return (
-        <div className="login-wrapper">
+   
+        <div 
+            className="login-wrapper" 
+            style={{ '--background-image': `url(${ronnieImage})` }}
+        >
             <div className="login-container">
                 <div className="login-header">
                     <div className="login-icon">
@@ -73,6 +55,7 @@ const Login = () => {
                 </div>
 
                 <form className="login-form" onSubmit={handleSubmit} noValidate>
+
                     <div className="mb-4">
                         <label htmlFor="usuario" className="form-label">
                             <i className="bi bi-person-fill me-2"></i>
@@ -90,7 +73,6 @@ const Login = () => {
                             autoComplete="username"
                         />
                     </div>
-
                     <div className="mb-4">
                         <label htmlFor="contrasena" className="form-label">
                             <i className="bi bi-lock-fill me-2"></i>
@@ -108,14 +90,12 @@ const Login = () => {
                             autoComplete="current-password"
                         />
                     </div>
-
                     {error && (
                         <div className="alert alert-danger" role="alert">
                             <i className="bi bi-exclamation-triangle-fill"></i>
                             <div>{error}</div>
                         </div>
                     )}
-
                     <button
                         type="submit"
                         className="btn btn-primary btn-lg w-100"
