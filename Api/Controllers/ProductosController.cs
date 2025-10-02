@@ -1,11 +1,13 @@
 using Api.Comun.Interfaces;
 using Api.Comun.Modelos.Productos;
 using Api.Entidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers;
 
+[Authorize]
 [Route("productos")]
 public class ProductosController : ControllerBase
 {
@@ -73,7 +75,7 @@ public class ProductosController : ControllerBase
         var proveedor = await _contexto.Proveedores.FirstOrDefaultAsync(p => p.Nombre == dto.NombreProveedor, ct);
         if (proveedor == null)
         {
-            return BadRequest($"No se encontró proveedor con nombre '{dto.NombreProveedor}'");
+            return BadRequest($"No se encontrï¿½ proveedor con nombre '{dto.NombreProveedor}'");
         }
 
         var nuevo = new Producto
@@ -104,7 +106,7 @@ public class ProductosController : ControllerBase
         var proveedor = await _contexto.Proveedores
             .FirstOrDefaultAsync(p => p.Nombre == dto.NombreProveedor, ct);
         if (proveedor == null)
-            throw new Exception($"No se encontró proveedor con nombre '{dto.NombreProveedor}'");
+            throw new Exception($"No se encontrï¿½ proveedor con nombre '{dto.NombreProveedor}'");
 
        
         producto.Nombre = dto.Nombre;

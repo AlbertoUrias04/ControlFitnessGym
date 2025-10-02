@@ -14,9 +14,19 @@ public class AplicacionBdContexto : DbContext, IAplicacionBdContexto
     public AplicacionBdContexto(DbContextOptions opciones) : base(opciones)
     {
     }
+    // Entidades del sistema de autenticación
     public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<SesionUsuario> SesionesUsuario { get; set; }
+
+    // Entidades del gimnasio
     public DbSet<Sucursal> Sucursales { get; set; }
+    public DbSet<Socio> Socios { get; set; }
+    public DbSet<Membresia> Membresias { get; set; }
+    public DbSet<SocioMembresia> SocioMembresias { get; set; }
+    public DbSet<Pago> Pagos { get; set; }
+    public DbSet<Asistencia> Asistencias { get; set; }
+
+    // Entidades obsoletas (farmacia) - mantener temporalmente para no romper compilación
     public DbSet<Proveedor> Proveedores { get; set; }
     public DbSet<Producto> Productos { get; set; }
     public DbSet<Venta> Ventas { get; set; }

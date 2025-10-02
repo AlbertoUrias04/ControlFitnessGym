@@ -14,10 +14,8 @@ public class ProveedorConfiguracion : IEntityTypeConfiguration<Proveedor>
             .IsRequired()
             .HasMaxLength(100);
 
-        constructor.Property(p => p.Telefono)
-            .HasMaxLength(20);
-
-        constructor.Property(p => p.Email)
-            .HasMaxLength(100);
+        constructor.Ignore(p => p.Telefono);
+        constructor.Ignore(p => p.Email);
+        constructor.Ignore(p => p.Productos);
     }
 }

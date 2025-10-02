@@ -11,18 +11,20 @@ public class VentaConfiguracion : IEntityTypeConfiguration<Venta>
     {
         constructor.HasKey(v => v.Id);
 
-        constructor.Property(v => v.Fecha).IsRequired();
         constructor.Property(v => v.Cantidad).IsRequired();
+
+        constructor.Property(v => v.PrecioUnitario)
+            .IsRequired()
+            .HasColumnType("decimal(18,2)");
+
         constructor.Property(v => v.Total)
             .IsRequired()
             .HasColumnType("decimal(18,2)");
 
+        constructor.Property(v => v.FechaVenta).IsRequired();
+
         constructor.HasOne(v => v.Producto)
             .WithMany(p => p.Ventas)
             .HasForeignKey(v => v.ProductoId);
-
-        constructor.HasOne(v => v.Sucursal)
-            .WithMany(s => s.Ventas)
-            .HasForeignKey(v => v.SucursalId);
     }
 }

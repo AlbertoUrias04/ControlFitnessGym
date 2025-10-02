@@ -1,11 +1,13 @@
 using Api.Comun.Interfaces;
 using Api.Comun.Modelos.Cancelaciones;
 using Api.Entidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers;
 
+[Authorize]
 [Route("cancelaciones")]
 public class CancelacionesController : ControllerBase
 {
@@ -24,8 +26,8 @@ public class CancelacionesController : ControllerBase
         return cancelaciones.Select(c => new BuscarCancelacionDto
         {
             Id = c.Id,
-            Fecha = c.Fecha,
-            Motivo = c.Motivo,
+            Fecha = c.FechaCancelacion,
+            Motivo = c.Motivo ?? "",
             VentaId = c.VentaId
         }).ToList();
     }
@@ -37,18 +39,16 @@ public class CancelacionesController : ControllerBase
             .Include(v => v.Cancelacion)
             .FirstOrDefaultAsync(v => v.Id == dto.VentaId, ct);
 
-        if (venta == null || venta.Cancelada)
+        if (venta == null)
             return -1;
 
         if (venta.Cancelacion != null)
             return venta.Cancelacion.Id;
 
-        venta.Cancelada = true;
-
         var cancelacion = new Cancelacion
         {
             VentaId = dto.VentaId,
-            Fecha = DateTime.UtcNow,
+            FechaCancelacion = DateTime.UtcNow,
             Motivo = dto.Motivo
         };
 

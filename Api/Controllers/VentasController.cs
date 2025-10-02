@@ -1,11 +1,13 @@
 using Api.Comun.Interfaces;
 using Api.Comun.Modelos.Ventas;
 using Api.Entidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers;
 
+[Authorize]
 [Route("ventas")]
 public class VentasController : ControllerBase
 {
@@ -21,22 +23,20 @@ public class VentasController : ControllerBase
     {
         var ventas = await _contexto.Ventas
             .Include(v => v.Producto)
-            .Include(v => v.Sucursal)
-            .Include(v => v.Usuario)
             .ToListAsync();
 
         return ventas.Select(v => new BuscarVentaDto
         {
-            
+
             Id = v.Id,
-            UsuarioId = v.UsuarioId,
-            NombreUsuario = v.Usuario.Nombre,
-            Fecha = v.Fecha,
+            UsuarioId = 0, // No disponible
+            NombreUsuario = "",
+            Fecha = v.FechaVenta,
             Cantidad = v.Cantidad,
             Total = v.Total,
             Producto = v.Producto?.Nombre ?? "",
-            Sucursal = v.Sucursal?.Nombre ?? "",
-            Cancelada = v.Cancelada
+            Sucursal = "",
+            Cancelada = false
         }).ToList();
     }
 
@@ -45,7 +45,6 @@ public class VentasController : ControllerBase
     {
         var venta = await _contexto.Ventas
             .Include(v => v.Producto)
-            .Include(v => v.Sucursal)
             .FirstOrDefaultAsync(v => v.Id == id, ct);
 
         if (venta == null)
@@ -53,15 +52,15 @@ public class VentasController : ControllerBase
 
         return new BuscarVentaDto
         {
-            UsuarioId = venta.UsuarioId,
+            UsuarioId = 0,
             ProductoId = venta.ProductoId,
             Id = venta.Id,
-            Fecha = venta.Fecha,
+            Fecha = venta.FechaVenta,
             Cantidad = venta.Cantidad,
             Total = venta.Total,
             Producto = venta.Producto?.Nombre ?? "",
-            Sucursal = venta.Sucursal?.Nombre ?? "",
-            Cancelada = venta.Cancelada
+            Sucursal = "",
+            Cancelada = false
         };
     }
 
@@ -78,25 +77,15 @@ public class VentasController : ControllerBase
         if (producto == null || producto.Stock < dto.Cantidad)
             return BadRequest("Producto no encontrado");
 
-        var sucursal = await _contexto.Sucursales.FirstOrDefaultAsync(s => s.Nombre == dto.NombreSucursal, ct);
-        if (sucursal == null)
-            return BadRequest("Sucursal no encontrada");
-
-        var usuario = await _contexto.Usuarios.FindAsync(dto.UsuarioId);
-        if (usuario == null)
-            return BadRequest("Usuario no encontrado");
-
         producto.Stock -= dto.Cantidad;
 
         var venta = new Venta
         {
-            UsuarioId = dto.UsuarioId,
             ProductoId = dto.ProductoId,
-            SucursalId = sucursal.Id,
             Cantidad = dto.Cantidad,
-            Fecha = DateTime.UtcNow,
-            Total = producto.Precio * dto.Cantidad,
-            Cancelada = false
+            PrecioUnitario = producto.Precio,
+            FechaVenta = DateTime.UtcNow,
+            Total = producto.Precio * dto.Cantidad
         };
 
         await _contexto.Ventas.AddAsync(venta, ct);

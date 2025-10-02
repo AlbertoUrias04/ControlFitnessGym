@@ -1,15 +1,13 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using Api.Comun.Interfaces;
 
 namespace Api.Entidades;
 
 public class Proveedor : ISlug
 {
-    [Column("idProveedor")]
     public int Id { get; set; }
     public string Nombre { get; set; } = string.Empty;
-    public string Telefono { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
+    public string? Telefono { get; set; }
+    public string? Email { get; set; }
     public bool Habilitado { get; set; }
     public string Slug { get; set; } = string.Empty;
 

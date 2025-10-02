@@ -1,11 +1,13 @@
 using Api.Comun.Interfaces;
 using Api.Comun.Modelos.Reembolsos;
 using Api.Entidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers;
 
+[Authorize]
 [Route("reembolsos")]
 public class ReembolsosController : ControllerBase
 {

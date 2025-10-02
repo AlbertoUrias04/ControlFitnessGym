@@ -20,8 +20,8 @@ public class ProductoConfiguracion : IEntityTypeConfiguration<Producto>
         constructor.Property(p => p.Stock)
             .IsRequired();
 
-        constructor.HasOne(p => p.Proveedor)
-            .WithMany(p => p.Productos)
-            .HasForeignKey(p => p.ProveedorId);
+        // Ignorar relación con Proveedor - la BD no tiene esta columna
+        constructor.Ignore(p => p.ProveedorId);
+        constructor.Ignore(p => p.Proveedor);
     }
 }

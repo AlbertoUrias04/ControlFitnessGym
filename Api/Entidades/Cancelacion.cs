@@ -1,15 +1,16 @@
-using System.ComponentModel.DataAnnotations.Schema;
+using Api.Comun.Interfaces;
 
 namespace Api.Entidades;
 
-public class Cancelacion
+public class Cancelacion : ISlug
 {
-    [Column("idCancelacion")]
     public int Id { get; set; }
-    public DateTime Fecha { get; set; }
-    public string Motivo { get; set; } = string.Empty;
-
-    [Column("idVenta")]
+    public string Slug { get; set; } = string.Empty;
     public int VentaId { get; set; }
+    public string? Motivo { get; set; }
+    public DateTime FechaCancelacion { get; set; }
+
     public virtual Venta Venta { get; set; } = null!;
+
+    public string ObtenerDescripcionParaSlug() => $"cancelacion-{Id}";
 }

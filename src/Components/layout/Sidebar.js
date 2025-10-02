@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { User, Building, Truck, Package, ShoppingCart, Ban, RotateCcw, LogOut, Menu } from "lucide-react";
+import { User, Building, Users, CreditCard, Truck, Package, ShoppingCart, Ban, RotateCcw, LogOut, Menu } from "lucide-react";
 import "./Sidebar.css";
 
 export default function Sidebar({ isOpen, toggleSidebar }) {
@@ -22,6 +22,14 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
                     <Link to="/sucursales" className="sidebar-link">
                         <Building className="w-5 h-5" />
                         {isOpen && <span className="ml-2">Sucursales</span>}
+                    </Link>
+                    <Link to="/socios" className="sidebar-link">
+                        <Users className="w-5 h-5" />
+                        {isOpen && <span className="ml-2">Socios</span>}
+                    </Link>
+                    <Link to="/membresias" className="sidebar-link">
+                        <CreditCard className="w-5 h-5" />
+                        {isOpen && <span className="ml-2">Membresías</span>}
                     </Link>
                     <Link to="/proveedores" className="sidebar-link">
                         <Truck className="w-5 h-5" />
