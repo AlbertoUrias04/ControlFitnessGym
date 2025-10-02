@@ -79,3 +79,6 @@ appsettings.*.json
 # Test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
+Api/bin/Debug/net7.0/Api.dll
+Api/bin/Debug/net7.0/Api.pdb
+*.dll
