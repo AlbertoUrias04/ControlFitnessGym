@@ -96,7 +96,7 @@ export default function Membresias() {
         icon: "success",
         title: "Estado actualizado",
         text: `Membresía ${nuevoEstado ? "activada" : "desactivada"} exitosamente`,
-        confirmButtonColor: "#1976d2",
+        confirmButtonColor: "#d32f2f",
       });
 
       cargarMembresias();
@@ -138,9 +138,14 @@ export default function Membresias() {
         <h1 className="page-title">Gestión de Membresías</h1>
         <Button
           variant="contained"
-          color="primary"
           startIcon={<Add />}
           onClick={() => setModalAbierto(true)}
+          sx={{
+            backgroundColor: "#d32f2f",
+            "&:hover": {
+              backgroundColor: "#b71c1c",
+            },
+          }}
         >
           Nueva Membresía
         </Button>
@@ -193,7 +198,7 @@ export default function Membresias() {
                     display: "flex",
                     flexDirection: "column",
                     borderTop: membresia.activa
-                      ? "4px solid #1976d2"
+                      ? "4px solid #d32f2f"
                       : "4px solid #9e9e9e",
                   }}
                 >
@@ -207,7 +212,6 @@ export default function Membresias() {
                       }}
                     >
                       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                        <FitnessCenter color="primary" />
                         <h3 style={{ margin: 0 }}>{membresia.nombre}</h3>
                       </Box>
                       <Chip
@@ -222,7 +226,7 @@ export default function Membresias() {
                         style={{
                           fontSize: "2rem",
                           fontWeight: "bold",
-                          color: "#1976d2",
+                          color: "#d32f2f",
                           margin: 0,
                         }}
                       >
@@ -284,7 +288,7 @@ export default function Membresias() {
           <TableContainer component={Paper} elevation={3} sx={{ mt: 3 }}>
             <Table>
               <TableHead>
-                <TableRow sx={{ backgroundColor: "#1976d2" }}>
+                <TableRow sx={{ backgroundColor: "#d32f2f" }}>
                   <TableCell sx={{ color: "white", fontWeight: "bold" }}>
                     Nombre
                   </TableCell>

@@ -11,6 +11,7 @@ public class BuscarSocioDto
     public DateTime? FechaNacimiento { get; set; }
     public string? Direccion { get; set; }
     public bool Habilitado { get; set; }
+    public int? SucursalId { get; set; }
     public string NombreSucursal { get; set; } = string.Empty;
     public string? MembresiaActual { get; set; }
     public DateTime? FechaFinMembresia { get; set; }

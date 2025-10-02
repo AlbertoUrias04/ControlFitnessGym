@@ -8,17 +8,25 @@ public class ReembolsoConfiguracion : IEntityTypeConfiguration<Reembolso>
 {
     public void Configure(EntityTypeBuilder<Reembolso> constructor)
     {
+        constructor.ToTable("Reembolsos");
+
         constructor.HasKey(r => r.Id);
+
+        constructor.Property(r => r.Slug)
+            .IsRequired();
 
         constructor.Property(r => r.Monto)
             .HasColumnType("decimal(18,2)")
             .IsRequired();
 
-        constructor.Property(r => r.Fecha)
+        constructor.Property(r => r.Motivo)
             .IsRequired();
 
-        constructor.HasOne(r => r.Sucursal)
-            .WithMany(s => s.Reembolsos)
-            .HasForeignKey(r => r.SucursalId);
+        constructor.Property(r => r.FechaReembolso)
+            .IsRequired();
+
+        constructor.HasOne(r => r.Venta)
+            .WithMany()
+            .HasForeignKey(r => r.VentaId);
     }
 }

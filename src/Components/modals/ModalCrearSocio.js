@@ -123,7 +123,7 @@ export default function ModalCrearSocio({ abierto, cerrar, recargar }) {
                 icon: "success",
                 title: "Socio creado",
                 text: "El socio se ha registrado exitosamente",
-                confirmButtonColor: "#1976d2",
+                confirmButtonColor: "#d32f2f",
             });
 
             reset();
@@ -137,11 +137,11 @@ export default function ModalCrearSocio({ abierto, cerrar, recargar }) {
 
             if (error.response) {
                 if (error.response.status === 400) {
-                    mensajeError = "Datos inválidos";
-                    detalles = "Verifica que toda la información esté correcta";
+                    mensajeError = "Datos duplicados";
+                    detalles = error.response.data?.message || "Ya existe un socio con este email o teléfono";
                 } else if (error.response.status === 409) {
                     mensajeError = "Socio duplicado";
-                    detalles = "Ya existe un socio con este email.";
+                    detalles = error.response.data?.message || "Ya existe un socio con este email.";
                 } else {
                     mensajeError = "Error del servidor";
                     detalles = "No se pudo guardar el socio. Intenta nuevamente.";
@@ -171,7 +171,7 @@ export default function ModalCrearSocio({ abierto, cerrar, recargar }) {
             fullWidth
             disableEscapeKeyDown={guardando}
         >
-            <DialogTitle sx={{ color: "#1976d2", fontWeight: "bold" }}>
+            <DialogTitle sx={{ color: "#d32f2f", fontWeight: "bold" }}>
                 Nuevo Socio
             </DialogTitle>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -271,9 +271,14 @@ export default function ModalCrearSocio({ abierto, cerrar, recargar }) {
                     <Button
                         type="submit"
                         variant="contained"
-                        color="primary"
                         disabled={guardando}
                         startIcon={guardando && <CircularProgress size={20} />}
+                        sx={{
+                            backgroundColor: "#d32f2f",
+                            "&:hover": {
+                                backgroundColor: "#b71c1c",
+                            },
+                        }}
                     >
                         {guardando ? "Guardando..." : "Guardar"}
                     </Button>

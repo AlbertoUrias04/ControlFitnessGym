@@ -1,27 +1,16 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Api.Entidades;
 
 public class Reembolso
 {
-    [Column("idReembolso")]
     public int Id { get; set; }
-    public DateTime Fecha { get; set; }
+    public string Slug { get; set; } = string.Empty;
     public decimal Monto { get; set; }
+    public string Motivo { get; set; } = string.Empty;
+    public DateTime FechaReembolso { get; set; }
 
-    [Column("idSucursal")]
-    public int SucursalId { get; set; }
+    public int VentaId { get; set; }
     [JsonIgnore]
-    public virtual Sucursal Sucursal { get; set; } = null!;
-
-    [Column("idProducto")]
-    public int ProductoId { get; set; }
-    [JsonIgnore]
-    public virtual Producto Producto { get; set; } = null!;
-
-    [Column("idUsuario")]
-    public int UsuarioId { get; set; }
-    [JsonIgnore]
-    public virtual Usuario Usuario { get; set; } = null!;
+    public virtual Venta Venta { get; set; } = null!;
 }

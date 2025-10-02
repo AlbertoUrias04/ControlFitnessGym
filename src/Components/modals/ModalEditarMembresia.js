@@ -102,7 +102,7 @@ export default function ModalEditarMembresia({ abierto, cerrar, recargar, membre
                 icon: "success",
                 title: "Membresía actualizada",
                 text: "Los datos se actualizaron exitosamente",
-                confirmButtonColor: "#1976d2",
+                confirmButtonColor: "#d32f2f",
             });
 
             reset();
@@ -150,7 +150,7 @@ export default function ModalEditarMembresia({ abierto, cerrar, recargar, membre
             fullWidth
             disableEscapeKeyDown={guardando}
         >
-            <DialogTitle sx={{ color: "#1976d2", fontWeight: "bold" }}>
+            <DialogTitle sx={{ color: "#d32f2f", fontWeight: "bold" }}>
                 Editar Membresía
             </DialogTitle>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -229,9 +229,14 @@ export default function ModalEditarMembresia({ abierto, cerrar, recargar, membre
                     <Button
                         type="submit"
                         variant="contained"
-                        color="primary"
                         disabled={guardando}
                         startIcon={guardando && <CircularProgress size={20} />}
+                        sx={{
+                            backgroundColor: "#d32f2f",
+                            "&:hover": {
+                                backgroundColor: "#b71c1c",
+                            },
+                        }}
                     >
                         {guardando ? "Guardando..." : "Guardar"}
                     </Button>

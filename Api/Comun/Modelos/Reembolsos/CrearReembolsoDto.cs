@@ -2,10 +2,8 @@ namespace Api.Comun.Modelos.Reembolsos;
 
 public class CrearReembolsoDto
 {
-    public int UsuarioId { get; set; }
-    public DateTime Fecha { get; set; }
+    public int VentaId { get; set; }
     public decimal Monto { get; set; }
-    public string NombreSucursal { get; set; }
-    public int SucursalId { get; set; }
-    public int ProductoId { get; set; }
+    public string Motivo { get; set; } = string.Empty;
+    public DateTime FechaReembolso { get; set; }
 }

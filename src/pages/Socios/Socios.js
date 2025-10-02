@@ -95,7 +95,7 @@ export default function Socios() {
         icon: "success",
         title: "Estado actualizado",
         text: `Socio ${nuevoEstado ? "activado" : "desactivado"} exitosamente`,
-        confirmButtonColor: "#1976d2",
+        confirmButtonColor: "#d32f2f",
       });
 
       cargarSocios();
@@ -129,9 +129,14 @@ export default function Socios() {
         <h1 className="page-title">Gestión de Socios</h1>
         <Button
           variant="contained"
-          color="primary"
           startIcon={<PersonAdd />}
           onClick={() => setModalAbierto(true)}
+          sx={{
+            backgroundColor: "#d32f2f",
+            "&:hover": {
+              backgroundColor: "#b71c1c",
+            },
+          }}
         >
           Agregar Socio
         </Button>
@@ -177,7 +182,7 @@ export default function Socios() {
           <TableContainer component={Paper} elevation={3}>
             <Table>
               <TableHead>
-                <TableRow sx={{ backgroundColor: "#1976d2" }}>
+                <TableRow sx={{ backgroundColor: "#d32f2f" }}>
                   <TableCell sx={{ color: "white", fontWeight: "bold" }}>
                     Nombre Completo
                   </TableCell>
@@ -274,7 +279,15 @@ export default function Socios() {
                 count={totalPaginas}
                 page={pagina}
                 onChange={(e, val) => setPagina(val)}
-                color="primary"
+                sx={{
+                  "& .MuiPaginationItem-root.Mui-selected": {
+                    backgroundColor: "#d32f2f",
+                    color: "white",
+                    "&:hover": {
+                      backgroundColor: "#b71c1c",
+                    },
+                  },
+                }}
               />
             </Box>
           )}

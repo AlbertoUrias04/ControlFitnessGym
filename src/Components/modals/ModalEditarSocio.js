@@ -83,7 +83,7 @@ export default function ModalEditarSocio({ abierto, cerrar, recargar, socio }) {
     }, [abierto]);
 
     useEffect(() => {
-        if (socio) {
+        if (socio && sucursales.length > 0) {
             // Convertir fecha a formato YYYY-MM-DD para el input
             const fechaFormateada = socio.fechaNacimiento
                 ? new Date(socio.fechaNacimiento).toISOString().split("T")[0]
@@ -96,11 +96,11 @@ export default function ModalEditarSocio({ abierto, cerrar, recargar, socio }) {
                 email: socio.email,
                 telefono: socio.telefono || "",
                 fechaNacimiento: fechaFormateada,
-                sucursalId: socio.sucursalId,
-                habilitado: socio.habilitado,
+                sucursalId: socio.sucursalId || "",
+                habilitado: socio.habilitado ?? true,
             });
         }
-    }, [socio, reset]);
+    }, [socio, sucursales, reset]);
 
     const cargarSucursales = async () => {
         try {
@@ -122,13 +122,17 @@ export default function ModalEditarSocio({ abierto, cerrar, recargar, socio }) {
         setGuardando(true);
 
         try {
-            await api.put(`/socios/${socio.slug}`, data);
+            const payload = {
+                ...data,
+                slug: socio.slug
+            };
+            await api.put(`/socios/${socio.slug}`, payload);
 
             Swal.fire({
                 icon: "success",
                 title: "Socio actualizado",
                 text: "Los datos se actualizaron exitosamente",
-                confirmButtonColor: "#1976d2",
+                confirmButtonColor: "#d32f2f",
             });
 
             reset();
@@ -142,8 +146,8 @@ export default function ModalEditarSocio({ abierto, cerrar, recargar, socio }) {
 
             if (error.response) {
                 if (error.response.status === 400) {
-                    mensajeError = "Datos inválidos";
-                    detalles = "Verifica que toda la información esté correcta";
+                    mensajeError = "Datos duplicados";
+                    detalles = error.response.data?.message || "Ya existe otro socio con este email o teléfono";
                 } else if (error.response.status === 404) {
                     mensajeError = "Socio no encontrado";
                     detalles = "El socio que intentas editar no existe";
@@ -157,12 +161,20 @@ export default function ModalEditarSocio({ abierto, cerrar, recargar, socio }) {
                     "No se pudo conectar con el servidor. Verifica tu conexión a internet.";
             }
 
-            Swal.fire({
-                icon: "error",
-                title: mensajeError,
-                text: detalles,
-                confirmButtonColor: "#d32f2f",
-            });
+            // Cerrar modal primero
+            setGuardando(false);
+            reset();
+            cerrar();
+
+            // Mostrar error después de cerrar
+            setTimeout(() => {
+                Swal.fire({
+                    icon: "error",
+                    title: mensajeError,
+                    text: detalles,
+                    confirmButtonColor: "#d32f2f",
+                });
+            }, 300);
         } finally {
             setGuardando(false);
         }
@@ -176,7 +188,7 @@ export default function ModalEditarSocio({ abierto, cerrar, recargar, socio }) {
             fullWidth
             disableEscapeKeyDown={guardando}
         >
-            <DialogTitle sx={{ color: "#1976d2", fontWeight: "bold" }}>
+            <DialogTitle sx={{ color: "#d32f2f", fontWeight: "bold" }}>
                 Editar Socio
             </DialogTitle>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -250,8 +262,13 @@ export default function ModalEditarSocio({ abierto, cerrar, recargar, socio }) {
                         <Controller
                             name="sucursalId"
                             control={control}
+                            defaultValue=""
                             render={({ field }) => (
-                                <Select {...field} label="Sucursal">
+                                <Select
+                                    {...field}
+                                    label="Sucursal"
+                                    value={field.value || ""}
+                                >
                                     {sucursales.map((sucursal) => (
                                         <MenuItem key={sucursal.id} value={sucursal.id}>
                                             {sucursal.nombre}
@@ -265,7 +282,19 @@ export default function ModalEditarSocio({ abierto, cerrar, recargar, socio }) {
                         )}
                     </FormControl>
                     <FormControlLabel
-                        control={<Switch {...register("habilitado")} disabled={guardando} />}
+                        control={
+                            <Controller
+                                name="habilitado"
+                                control={control}
+                                render={({ field }) => (
+                                    <Switch
+                                        checked={field.value}
+                                        onChange={(e) => field.onChange(e.target.checked)}
+                                        disabled={guardando}
+                                    />
+                                )}
+                            />
+                        }
                         label="Habilitado"
                         sx={{ mt: 2 }}
                     />
@@ -277,9 +306,14 @@ export default function ModalEditarSocio({ abierto, cerrar, recargar, socio }) {
                     <Button
                         type="submit"
                         variant="contained"
-                        color="primary"
                         disabled={guardando}
                         startIcon={guardando && <CircularProgress size={20} />}
+                        sx={{
+                            backgroundColor: "#d32f2f",
+                            "&:hover": {
+                                backgroundColor: "#b71c1c",
+                            },
+                        }}
                     >
                         {guardando ? "Guardando..." : "Guardar"}
                     </Button>

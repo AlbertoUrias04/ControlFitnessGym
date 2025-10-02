@@ -22,16 +22,16 @@ const Login = () => {
                 Contrasena: contrasena,
                 MantenerSesion: true
             };
+
             const res = await api.post("/login", data);
             const token = res.headers.authorization || res.headers.Authorization;
+
             if (!token) {
                 throw new Error("Token no recibido");
             }
             localStorage.setItem("token", token);
-            alert("✅ Login exitoso!");
             navigate("/usuarios");
         } catch (err) {
-            console.error("Error al iniciar sesion:", err);
             setError("Usuario o contraseña incorrectos");
         } finally {
             setLoading(false);

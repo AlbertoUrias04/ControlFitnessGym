@@ -22,17 +22,17 @@ public class ReembolsosController : ControllerBase
     public async Task<List<BuscarReembolsoDto>> ObtenerReembolsos()
     {
         var reembolsos = await _contexto.Reembolsos
-            .Include(r => r.Sucursal)
+            .Include(r => r.Venta)
             .ToListAsync();
 
         return reembolsos.Select(r => new BuscarReembolsoDto
         {
-            UsuarioId = r.UsuarioId,
-            Fecha = r.Fecha,
+            Id = r.Id,
+            Slug = r.Slug,
+            VentaId = r.VentaId,
             Monto = r.Monto,
-            ProductoId = r.ProductoId,
-            SucursalId = r.SucursalId,
-            NombreSucursal = r.Sucursal?.Nombre ?? ""
+            Motivo = r.Motivo,
+            FechaReembolso = r.FechaReembolso
         }).ToList();
     }
 
@@ -44,25 +44,17 @@ public class ReembolsosController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var producto = await _contexto.Productos.FindAsync(new object[] { dto.ProductoId }, ct);
-        if (producto == null)
-            return BadRequest("Producto no encontrado");
-
-        var sucursal = await _contexto.Sucursales.FirstOrDefaultAsync(s => s.Nombre == dto.NombreSucursal, ct);
-        if (sucursal == null)
-            return BadRequest("Sucursal no encontrada");
-
-        var usuario = await _contexto.Usuarios.FindAsync(dto.UsuarioId);
-        if (usuario == null)
-            return BadRequest("Usuario no encontrado");
+        var venta = await _contexto.Ventas.FindAsync(new object[] { dto.VentaId }, ct);
+        if (venta == null)
+            return BadRequest("Venta no encontrada");
 
         var reembolso = new Reembolso
         {
-            UsuarioId = dto.UsuarioId,
-            Fecha = DateTime.UtcNow,
+            VentaId = dto.VentaId,
             Monto = dto.Monto,
-            SucursalId = sucursal.Id,
-            ProductoId = dto.ProductoId
+            Motivo = dto.Motivo,
+            FechaReembolso = dto.FechaReembolso,
+            Slug = Guid.NewGuid().ToString()
         };
 
         await _contexto.Reembolsos.AddAsync(reembolso, ct);

@@ -67,8 +67,28 @@ public class SociosController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<string> RegistrarSocio([FromBody] CrearSocioDto socioDto, CancellationToken cancelacionToken)
+    public async Task<IActionResult> RegistrarSocio([FromBody] CrearSocioDto socioDto, CancellationToken cancelacionToken)
     {
+        // Validar email duplicado
+        if (!string.IsNullOrEmpty(socioDto.Email))
+        {
+            var emailExiste = await _contexto.Socios
+                .AnyAsync(s => s.Email == socioDto.Email, cancelacionToken);
+
+            if (emailExiste)
+                return BadRequest(new { message = "Ya existe un socio con este email" });
+        }
+
+        // Validar teléfono duplicado
+        if (!string.IsNullOrEmpty(socioDto.Telefono))
+        {
+            var telefonoExiste = await _contexto.Socios
+                .AnyAsync(s => s.Telefono == socioDto.Telefono, cancelacionToken);
+
+            if (telefonoExiste)
+                return BadRequest(new { message = "Ya existe un socio con este teléfono" });
+        }
+
         var nuevoSocio = new Socio()
         {
             Nombre = socioDto.Nombre,
@@ -85,11 +105,11 @@ public class SociosController : ControllerBase
         await _contexto.Socios.AddAsync(nuevoSocio, cancelacionToken);
         await _contexto.SaveChangesAsync(cancelacionToken);
 
-        return nuevoSocio.Slug;
+        return Ok(nuevoSocio.Slug);
     }
 
     [HttpPut("{slug}")]
-    public async Task<BuscarSocioDto> ModificarSocio([FromBody] ModificarSocioDto socioDto,
+    public async Task<IActionResult> ModificarSocio([FromBody] ModificarSocioDto socioDto,
         CancellationToken cancelacionToken)
     {
         var socio = await _contexto.Socios
@@ -99,7 +119,27 @@ public class SociosController : ControllerBase
             .FirstOrDefaultAsync(x => x.Slug == socioDto.Slug, cancelacionToken);
 
         if (socio == null)
-            return new BuscarSocioDto();
+            return NotFound(new { message = "Socio no encontrado" });
+
+        // Validar email duplicado (excluyendo el socio actual)
+        if (!string.IsNullOrEmpty(socioDto.Email))
+        {
+            var emailExiste = await _contexto.Socios
+                .AnyAsync(s => s.Email == socioDto.Email && s.Id != socio.Id, cancelacionToken);
+
+            if (emailExiste)
+                return BadRequest(new { message = "Ya existe otro socio con este email" });
+        }
+
+        // Validar teléfono duplicado (excluyendo el socio actual)
+        if (!string.IsNullOrEmpty(socioDto.Telefono))
+        {
+            var telefonoExiste = await _contexto.Socios
+                .AnyAsync(s => s.Telefono == socioDto.Telefono && s.Id != socio.Id, cancelacionToken);
+
+            if (telefonoExiste)
+                return BadRequest(new { message = "Ya existe otro socio con este teléfono" });
+        }
 
         socio.Nombre = socioDto.Nombre;
         socio.ApellidoPaterno = socioDto.ApellidoPaterno;
@@ -113,7 +153,7 @@ public class SociosController : ControllerBase
 
         await _contexto.SaveChangesAsync(cancelacionToken);
 
-        return socio.ConvertirDto();
+        return Ok(socio.ConvertirDto());
     }
 
     [HttpPatch("{slug}")]

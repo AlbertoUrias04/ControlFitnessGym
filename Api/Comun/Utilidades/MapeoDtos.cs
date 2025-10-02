@@ -37,6 +37,7 @@ public static class MapeoDtos
             FechaNacimiento = socio.FechaNacimiento,
             Direccion = socio.Direccion,
             Habilitado = socio.Activo,
+            SucursalId = socio.SucursalId,
             NombreSucursal = socio.Sucursal?.Nombre ?? "",
             MembresiaActual = membresiaActiva?.Membresia?.Nombre,
             FechaFinMembresia = membresiaActiva?.FechaFin,

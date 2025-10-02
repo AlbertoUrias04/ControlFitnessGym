@@ -2,10 +2,10 @@ namespace Api.Comun.Modelos.Reembolsos;
 
 public class BuscarReembolsoDto
 {
-    public int UsuarioId { get; set; }
-    public DateTime Fecha { get; set; }
+    public int Id { get; set; }
+    public string Slug { get; set; } = string.Empty;
+    public int VentaId { get; set; }
     public decimal Monto { get; set; }
-    public int ProductoId { get; set; }
-    public int SucursalId { get; set; }
-    public string NombreSucursal { get; set; } = string.Empty;
+    public string Motivo { get; set; } = string.Empty;
+    public DateTime FechaReembolso { get; set; }
 }

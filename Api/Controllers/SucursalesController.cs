@@ -38,6 +38,7 @@ public class SucursalesController : ControllerBase
 
 		return lista.Select(s => new BuscarSucursalDto
 		{
+			Id = s.Id,
 			Nombre = s.Nombre,
 			Direccion = s.Direccion,
 			Slug = s.Slug,
@@ -55,6 +56,7 @@ public class SucursalesController : ControllerBase
 
 		return new BuscarSucursalDto
 		{
+			Id = sucursal.Id,
 			Nombre = sucursal.Nombre,
 			Direccion = sucursal.Direccion,
 			Slug = sucursal.Slug,
@@ -94,6 +96,7 @@ public class SucursalesController : ControllerBase
 
 		return new BuscarSucursalDto
 		{
+			Id = sucursal.Id,
 			Nombre = sucursal.Nombre,
 			Direccion = sucursal.Direccion,
 			Slug = sucursal.Slug,

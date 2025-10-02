@@ -17,8 +17,6 @@ public class Sucursal : ISlug
 
     [NotMapped]
     public virtual List<Venta> Ventas { get; set; } = new List<Venta>();
-    [NotMapped]
-    public virtual List<Reembolso> Reembolsos { get; set; } = new List<Reembolso>();
 
     public string ObtenerDescripcionParaSlug() => Nombre;
 }
