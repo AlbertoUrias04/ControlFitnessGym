@@ -18,7 +18,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Swal from "sweetalert2";
 import api from "../../services/api";
-import "./ModalCrearUsuario.css";
 
 const esquema = yup.object().shape({
     nombre: yup
@@ -129,9 +128,11 @@ export default function ModalCrearUsuario({ abierto, onClose, onGuardado }) {
             fullWidth
             disableEscapeKeyDown={guardando}
         >
-            <DialogTitle className="modal-title">Nuevo Usuario</DialogTitle>
+            <DialogTitle sx={{ color: "#d32f2f", fontWeight: "bold" }}>
+                Nuevo Usuario
+            </DialogTitle>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogContent className="modal-content">
+                <DialogContent>
                     <TextField
                         label="Nombre"
                         fullWidth
@@ -195,23 +196,28 @@ export default function ModalCrearUsuario({ abierto, onClose, onGuardado }) {
                     <FormControlLabel
                         control={<Switch {...register("habilitado")} defaultChecked disabled={guardando} />}
                         label="Habilitado"
-                        className="switch-label"
+                        sx={{ mt: 1 }}
                     />
                 </DialogContent>
-                <DialogActions className="modal-actions">
-                    <Button 
-                        onClick={handleClose} 
+                <DialogActions sx={{ p: 2 }}>
+                    <Button
+                        onClick={handleClose}
                         variant="outlined"
                         disabled={guardando}
                     >
                         Cancelar
                     </Button>
-                    <Button 
-                        type="submit" 
-                        variant="contained" 
-                        color="primary"
+                    <Button
+                        type="submit"
+                        variant="contained"
                         disabled={guardando}
                         startIcon={guardando && <CircularProgress size={20} />}
+                        sx={{
+                            backgroundColor: "#d32f2f",
+                            "&:hover": {
+                                backgroundColor: "#b71c1c",
+                            },
+                        }}
                     >
                         {guardando ? "Guardando..." : "Guardar"}
                     </Button>

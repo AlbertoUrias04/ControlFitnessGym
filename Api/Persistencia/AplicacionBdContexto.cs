@@ -26,13 +26,6 @@ public class AplicacionBdContexto : DbContext, IAplicacionBdContexto
     public DbSet<Pago> Pagos { get; set; }
     public DbSet<Asistencia> Asistencias { get; set; }
 
-    // Entidades obsoletas (farmacia) - mantener temporalmente para no romper compilación
-    public DbSet<Proveedor> Proveedores { get; set; }
-    public DbSet<Producto> Productos { get; set; }
-    public DbSet<Venta> Ventas { get; set; }
-    public DbSet<Cancelacion> Cancelaciones { get; set; }
-    public DbSet<Reembolso> Reembolsos { get; set; }
-
     public override async Task<int> SaveChangesAsync(CancellationToken cancelacionToken = default)
     {
         foreach (var entrada in ChangeTracker.Entries<ISlug>())
@@ -114,12 +107,6 @@ public class AplicacionBdContexto : DbContext, IAplicacionBdContexto
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        modelBuilder.ApplyConfiguration(new SucursalConfiguracion());
-        modelBuilder.ApplyConfiguration(new ProveedorConfiguracion());
-        modelBuilder.ApplyConfiguration(new ProductoConfiguracion());
-        modelBuilder.ApplyConfiguration(new VentaConfiguracion());
-        modelBuilder.ApplyConfiguration(new CancelacionConfiguracion());
-        modelBuilder.ApplyConfiguration(new ReembolsoConfiguracion());
 
         base.OnModelCreating(modelBuilder);
     }

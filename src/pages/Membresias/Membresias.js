@@ -253,10 +253,15 @@ export default function Membresias() {
                       sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}
                     >
                       <Button
-                        variant="outlined"
-                        color="primary"
+                        variant="contained"
                         size="small"
                         onClick={() => abrirModalEditar(membresia)}
+                        sx={{
+                          backgroundColor: "#d32f2f",
+                          "&:hover": {
+                            backgroundColor: "#b71c1c",
+                          },
+                        }}
                       >
                         Editar
                       </Button>
@@ -346,10 +351,15 @@ export default function Membresias() {
                           }}
                         >
                           <Button
-                            variant="outlined"
-                            color="primary"
+                            variant="contained"
                             size="small"
                             onClick={() => abrirModalEditar(membresia)}
+                            sx={{
+                              backgroundColor: "#d32f2f",
+                              "&:hover": {
+                                backgroundColor: "#b71c1c",
+                              },
+                            }}
                           >
                             Editar
                           </Button>

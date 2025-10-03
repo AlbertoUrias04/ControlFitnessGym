@@ -221,10 +221,14 @@ export default function Usuarios() {
             Recargar
           </Button>
           <Button
-            className="botonVentas"
             variant="contained"
-            color="primary"
             onClick={() => setModalAbierto(true)}
+            sx={{
+              backgroundColor: "#d32f2f",
+              "&:hover": {
+                backgroundColor: "#b71c1c",
+              },
+            }}
           >
             Nuevo
           </Button>
@@ -301,11 +305,15 @@ export default function Usuarios() {
                 </TableCell>
                 <TableCell align="center" className="actions-cell">
                   <Button
-                    className="botonVentas"
                     variant="contained"
                     size="small"
-                    color="primary"
                     onClick={() => abrirEditar(u)}
+                    sx={{
+                      backgroundColor: "#d32f2f",
+                      "&:hover": {
+                        backgroundColor: "#b71c1c",
+                      },
+                    }}
                   >
                     Editar
                   </Button>
@@ -339,9 +347,17 @@ export default function Usuarios() {
           count={Math.ceil(filtrados.length / itemsPorPagina)}
           page={pagina}
           onChange={(e, value) => setPagina(value)}
-          color="primary"
           showFirstButton
           showLastButton
+          sx={{
+            "& .MuiPaginationItem-root.Mui-selected": {
+              backgroundColor: "#d32f2f",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "#b71c1c",
+              },
+            },
+          }}
         />
       </div>
 

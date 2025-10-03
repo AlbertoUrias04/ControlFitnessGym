@@ -161,9 +161,11 @@ export default function ModalEditarUsuario({ abierto, onClose, usuario, onActual
             fullWidth
             disableEscapeKeyDown={guardando}
         >
-            <DialogTitle className="modal-title">Editar Usuario</DialogTitle>
+            <DialogTitle sx={{ color: "#d32f2f", fontWeight: "bold" }}>
+                Editar Usuario
+            </DialogTitle>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogContent className="modal-content">
+                <DialogContent>
                     <TextField 
                         label="Nombre" 
                         fullWidth
@@ -227,23 +229,28 @@ export default function ModalEditarUsuario({ abierto, onClose, usuario, onActual
                     <FormControlLabel
                         control={<Switch {...register("habilitado")} checked={watch("habilitado")} disabled={guardando} />}
                         label="Habilitado"
-                        className="switch-label"
+                        sx={{ mt: 1 }}
                     />
                 </DialogContent>
-                <DialogActions className="modal-actions">
-                    <Button 
+                <DialogActions sx={{ p: 2 }}>
+                    <Button
                         onClick={handleClose}
                         variant="outlined"
                         disabled={guardando}
                     >
                         Cancelar
                     </Button>
-                    <Button 
-                        type="submit" 
-                        variant="contained" 
-                        color="primary"
+                    <Button
+                        type="submit"
+                        variant="contained"
                         disabled={guardando}
                         startIcon={guardando && <CircularProgress size={20} />}
+                        sx={{
+                            backgroundColor: "#d32f2f",
+                            "&:hover": {
+                                backgroundColor: "#b71c1c",
+                            },
+                        }}
                     >
                         {guardando ? "Guardando..." : "Guardar"}
                     </Button>

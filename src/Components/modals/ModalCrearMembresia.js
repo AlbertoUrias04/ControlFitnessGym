@@ -91,7 +91,7 @@ export default function ModalCrearMembresia({ abierto, cerrar, recargar }) {
                 icon: "success",
                 title: "Membresía creada",
                 text: "La membresía se ha registrado exitosamente",
-                confirmButtonColor: "#1976d2",
+                confirmButtonColor: "#d32f2f",
             });
 
             reset();
@@ -139,7 +139,7 @@ export default function ModalCrearMembresia({ abierto, cerrar, recargar }) {
             fullWidth
             disableEscapeKeyDown={guardando}
         >
-            <DialogTitle sx={{ color: "#1976d2", fontWeight: "bold" }}>
+            <DialogTitle sx={{ color: "#d32f2f", fontWeight: "bold" }}>
                 Nueva Membresía
             </DialogTitle>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -219,9 +219,14 @@ export default function ModalCrearMembresia({ abierto, cerrar, recargar }) {
                     <Button
                         type="submit"
                         variant="contained"
-                        color="primary"
                         disabled={guardando}
                         startIcon={guardando && <CircularProgress size={20} />}
+                        sx={{
+                            backgroundColor: "#d32f2f",
+                            "&:hover": {
+                                backgroundColor: "#b71c1c",
+                            },
+                        }}
                     >
                         {guardando ? "Guardando..." : "Guardar"}
                     </Button>

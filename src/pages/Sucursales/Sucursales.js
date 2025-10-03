@@ -64,7 +64,16 @@ export default function Sucursales() {
         <div className="page-container">
             <div className="header">
                 <h1>Sucursales</h1>
-                <Button className="botonVentas"  variant="contained" onClick={() => setModalCrearAbierto(true)}>
+                <Button
+                    variant="contained"
+                    onClick={() => setModalCrearAbierto(true)}
+                    sx={{
+                        backgroundColor: "#d32f2f",
+                        "&:hover": {
+                            backgroundColor: "#b71c1c",
+                        },
+                    }}
+                >
                     Nueva
                 </Button>
             </div>
@@ -98,7 +107,18 @@ export default function Sucursales() {
                                         color={s.habilitado ? "success" : "default"} />
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Button className="botonVentas" size="small" variant="contained" onClick={() => abrirEditar(s)}>
+                                    <Button
+                                        size="small"
+                                        variant="contained"
+                                        onClick={() => abrirEditar(s)}
+                                        sx={{
+                                            backgroundColor: "#d32f2f",
+                                            "&:hover": {
+                                                backgroundColor: "#b71c1c",
+                                            },
+                                            marginRight: "0.5rem",
+                                        }}
+                                    >
                                         Editar
                                     </Button>
                                     <Button size="small" color="error" variant="outlined" onClick={() => eliminarSucursal(s.slug)}>
@@ -121,6 +141,17 @@ export default function Sucursales() {
                     count={Math.ceil(filtradas.length / itemsPorPagina)}
                     page={pagina}
                     onChange={(e, v) => setPagina(v)}
+                    showFirstButton
+                    showLastButton
+                    sx={{
+                        "& .MuiPaginationItem-root.Mui-selected": {
+                            backgroundColor: "#d32f2f",
+                            color: "white",
+                            "&:hover": {
+                                backgroundColor: "#b71c1c",
+                            },
+                        },
+                    }}
                 />
             </div>
 
